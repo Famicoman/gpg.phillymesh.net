@@ -1,0 +1,21 @@
+# /var/lib/sks/sksconf
+
+debuglevel: 3
+
+# Set the hostname of your server
+hostname: gpg.phillymesh.net
+hkp_address: 127.0.0.1 #::1 fc05:b69f:3895:1bcc:e934:137f:f8ae:6713
+hkp_port: 11371
+recon_port: 11370
+
+# Set the PGP ID for the Server Contact
+from_addr: "PGP Key Server Administrator <pgp-public-keys@gpg.phillymesh.net>"
+server_contact: 0x8f5b291d3a3ca65a #0x1619ae4d7cf2a8f7
+
+initial_stat:
+disable_mailsync:
+membership_reload_interval: 1
+stat_hour: 12
+max_matches: 500
+pagesize: 16
+ptree_pagesize: 16
