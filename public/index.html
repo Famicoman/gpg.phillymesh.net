@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="OpenPGP Keyserver">
+
+      <title>OpenPGP Keyserver</title>
+      <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+      <link href="assets/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+      <style type="text/css">
+        html,body {
+          height: 100%;
+        }
+        #wrap {
+          min-height: 100%;
+          height: auto !important;
+          height: 100%;
+          margin: 0 auto -60px;
+        }
+        #push,#footer {
+          height: 60px;
+        }
+        #footer {
+          background-color: #f5f5f5;
+        }
+        .container .credit {
+            margin: 20px 0;
+        }
+      </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <div class="container">
+        <div class="page-header" id="banner" style="border-bottom: 0px;">
+          <div class="row">
+            <div class="col-lg-12">
+              <h1 class="text-center"><a href="."><img src="logo.png"></img></a></h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <h1 class="text-center"><strong>OpenPGP</strong>keyserver</h1>
+            </div>
+          </div>
+        </div>
+      </div><!--closing page header container-->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2">
+            <form action="/pks/lookup" method="get" class="form" role="form">
+              <div class="control-group">
+                <div class="controls" style="max-width:30em; margin:0 auto;">
+                  <input name="search" class="form-control" type="text" placeholder="Search for an OpenPGP Public Key, ie 0x..." style="font-size: 1.5em; line-height: 1.5em; height: 2em;" required autofocus />
+                </div>
+              </div>
+              <div class="control-group text-center" style="margin-top: 0.5em;">
+                <div class="controls">
+                  <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-search"></span>
+                    Search Key
+                  </button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-cloud-upload"></span>
+                    Submit Key
+                  </button>
+                </div>
+              </div>
+              <div class="text-center" style="margin-top: 0.5em;">
+                <a data-toggle="collapse" data-target="#advancedOptionsCollapse" href="#">Advanced Options</a>
+              </div>
+              <div id="advancedOptionsCollapse" class="collapse">
+                <div class="control-group col-md-4 col-md-offset-2">
+                  <div class="controls">
+                    Index Options:
+                    <label class="checkbox" for="fingerprint">
+                      <input id="fingerprint" type="checkbox" name="fingerprint" checked="checked" />
+                      Show OpenPGP fingerprints
+                    </label>
+                    <label class="checkbox" for="hash">
+                      <input id="hash" type="checkbox" name="hash" />
+                      Show full-key hashes
+                    </label>
+                    <label class="checkbox" for="exact">
+                      <input id="exact" type="checkbox" name="exact" value="on" />
+                      Only return exact matches
+                    </label>
+                    <label class="checkbox" for="mr">
+                      <input id="mr" type="checkbox" name="options" value="mr" />
+                      Machine readable
+                    </label>
+                  </div>
+                </div>
+                <div class="control-group col-md-offset-6">
+                  <div class="controls">
+                    Index type:
+                    <label class="radio" for="radios-0">
+                      <input name="op" id="radios-0" value="index" checked="checked" type="radio">
+                      Get regular index of matching keys
+                    </label>
+                    <label class="radio" for="radios-1">
+                      <input name="op" id="radios-1" value="vindex" type="radio">
+                      Get <strong>verbose</strong> index of matching keys
+                    </label>
+                    <label class="radio" for="radios-2">
+                      <input name="op" id="radios-2" value="get" type="radio">
+                      retrieve ascii-armored keys
+                    </label>
+                    <label class="radio" for="radios-3">
+                      <input name="op" id="radios-3" value="hget" type="radio">
+                      retrieve keys by full-key hash
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Submit Your OpenPGP Public Key</h4>
+            </div>
+            <div class="modal-body">
+              <form action="/pks/add" method="post" id="keySubmitForm">
+                <div class="control-group">
+                  <div class="controls">
+                    <textarea id="textarea" name="keytext" rows="20" style="width: 100%;font-family:Courier;font-size:12px;" placeholder="Enter your ASCII-armored OpenPGP public key here" required ></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-cloud-upload"></span>
+                    Submit Public Key
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="ContactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="ContactLabel">mike@phillymesh.net's OpenPGP Public Key</h4>
+            </div>
+            <div class="modal-body">
+              <p>If you have any issues or concerns about this site, or if you wish to peer with this server, please contact me via the email address within the below public key.</p>
+              <pre>
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: SKS 1.1.6
+Comment: Hostname: pgp.mit.edu
+
+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
+h4zfJhLjmWbS0Q==
+=EuqL
+-----END PGP PUBLIC KEY BLOCK-----
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="AboutLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="AboutLabel">About this Server</h4>
+            </div>
+            <div class="modal-body">
+              <p><strong>OpenPGP</strong> is a method of encrypting and/or signing data (for example an email) in a secure “<em>end to end</em>” way.
+                This means, the message is encrypted on your computer, using the recipient’s public key,
+                in a way that the e-mail server has no knowledge of the content of the message.
+                The recipient of the message then decrypts the message on their own computer using their private key.</p>
+              <p>This server is a member of the <a href="https://sks-keyservers.net" target="_blank">sks-keyserver</a> pool of servers. It hosts OpenPGP keys in a fashion that allows them to be quickly and easily retrieved and used by different client software.</p>
+              <p>You may connect to this server by adding one of the following  entries to your OpenPGP client software.</p>
+              <div class="col-md-6">
+                <ul>
+                  <li>pool.sks-keyservers.net</li>
+                  <li>na.pool.sks-keyservers.net</li>
+                  <li>eu.pool.sks-keyservers.net</li>
+                  <li>oc.pool.sks-keyservers.net</li>
+                </ul>
+              </div>
+              <div class="col-md-offset-6">
+                <ul>
+                  <li>p80.pool.sks-keyservers.net</li>
+                  <li>ipv4.pool.sks-keyservers.net</li>
+                  <li>ipv6.pool.sks-keyservers.net</li>
+                  <li>subset.pool.sks-keyservers.net</li>
+                </ul>
+              </div>
+              <p><b>Note:</b> <i>keys.gnupg.net</i> and <i>pgp.ipfire.org</i> are both alias for pool.sks-keyservers.net. Requests sent to either of these hosts will also be served by this server.</p>
+              <hr />
+              <h5>OpenPGP Resources</h5>
+              <ul>
+                <li><a href="https://gnupg.org/" target="_blank">GnuPG Homepage</a> - The main location for the OpenPGP Standard.</li>
+                <li><a href="https://sks-keyservers.net/" target="_blank">SKS Keyserver Homepage</a> - The keyserver software running on this server.</li>
+                <li><a href="http://www.pgp.com/" target="_blank">PGP Inc.</a> - The historical home of PGP, but has since been sold to Symantec.</li>
+                <li><a href="https://emailselfdefense.fsf.org/en/" target="_blank">Email Self-defense</a> - A teaching site about how to use OpenPGP to communicate.</li>
+                <li><a href="http://en.wikipedia.org/wiki/Pretty_Good_Privacy" target="_blank">Wikipedia - Pretty Good Privacy</a> - A nice overview of what OpenPGP is.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="tor" tabindex="-1" role="dialog" aria-labelledby="AboutLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="TorLabel">Tor Access</h4>
+            </div>
+            <div class="modal-body">
+              <p>This keyserver is available through the Tor network via <code>phillygoh7mkcb44.onion</code>. You should be able to use it like any other sks server.</p>
+              <pre>
+$ gpg --keyserver phillygoh7mkcb44.onion --recv-keys 3A3CA65A
+gpg: requesting key 3A3CA65A from hkp server phillygoh7mkcb44.onion 
+gpg: key 3A3CA65A: public key "Philly Mesh <hello@phillymesh.net>" imported 
+gpg: no ultimately trusted keys found gpg: Total number processed: 1 
+gpg:               imported: 1  (RSA: 1)
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="hype" tabindex="-1" role="dialog" aria-labelledby="AboutLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="HypeLabel">Hyperboria Access</h4>
+            </div>
+            <div class="modal-body">
+              <p>This keyserver is available through the Hyperboria network via <code>h.gpg.phillymesh.net</code>. You should be able to use it like any other sks server.</p>
+              <pre>
+$ gpg --keyserver h.gpg.phillymesh.net --recv-keys 3A3CA65A 
+gpg: requesting key 3A3CA65A from hkp server h.gpg.phillymesh.net 
+gpg: key 3A3CA65A: public key "Philly Mesh <hello@phillymesh.net>" imported 
+gpg: no ultimately trusted keys found gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!--Closing content wrap-->
+    <div id="footer">
+      <div class="container">
+        <div style="max-width: 20em; float: left;" >
+          <p class="muted credit small">
+            <a href="#" data-toggle="modal" data-target="#about">about</a> |
+            <a href="/pks/lookup?op=stats">statistics</a> |
+            <a href="#" data-toggle="modal" data-target="#tor">tor access</a> |
+            <a href="#" data-toggle="modal" data-target="#hype">hyperboria access</a>
+          </p>
+        </div>
+        <div style="float:right;">
+          <p class="muted credit small">Provided as a public service by <a href="#" data-toggle="modal" data-target="#contact">mike@phillymesh.net</a> | <a href="https://phillymesh.net">phillymesh.net</a>.</p>
+        </div>
+      </div>
+    </div>
+    <script src="assets/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="assets/jqBootstrapValidation.js/1.3.7/jqBootstrapValidation-1.3.7.min.js"></script>
+  </body>
+</html>
